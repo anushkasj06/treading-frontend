@@ -57,7 +57,7 @@ const Navbar = () => {
         </div>
        </div>
        <div>
-        <Avatar cl>
+        <Avatar >
             <AvatarFallback>CT</AvatarFallback>
         </Avatar>
        </div>
