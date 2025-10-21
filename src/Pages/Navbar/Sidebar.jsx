@@ -7,6 +7,8 @@ import {
   ExitIcon,
     PersonIcon,
 } from '@radix-ui/react-icons'
+import { Navigate, useNavigate } from 'react-router-dom'
+
 
 import {
   WalletIcon,
@@ -38,13 +40,17 @@ const menu = [
 ]
 
 const Sidebar = () => {
+
+  const navigate = useNavigate();
   return (
 
       <div className="mt-10 space-y-5">
         {menu.map((item, index) => (
           <div key={index}>
             <SheetClose className='w-full'>
-            <Button variant="outline" className='flex items-center gap-5 py-6 w-full onhover:bg-red-100'>
+            <Button variant="outline" 
+            className='flex items-center gap-5 py-6 w-full onhover:bg-red-100'
+            onClick={() => navigate (item.path)}>
               <span className='w-8'>
                 {item.icon}
               </span>
