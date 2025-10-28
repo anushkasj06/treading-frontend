@@ -27,17 +27,17 @@ const TransferForm = () => {
     <div>
       <div className="pb-2">
         <h1 className='pb-1'>Enter Amount</h1>
-        <Input className="py-7" placeholder="$9999" name="amount" onChange={handleChange} value={FormData.amount} />
+        <Input className="py-7 border-rose-700" placeholder="$9999" name="amount" onChange={handleChange} value={FormData.amount} />
       </div>
 
       <div className="pb-2">
         <h1 className='pb-1'>Wallet Id</h1>
-        <Input className="py-7" placeholder="Enter Wallet Id" name="walletId" onChange={handleChange} value={FormData.walletId} />
+        <Input className="py-7 border-rose-700" placeholder="Enter Wallet Id" name="walletId" onChange={handleChange} value={FormData.walletId} />
       </div>
 
       <div className='pb-2'>
         <h1 className='pb-1'>Purpose</h1>
-        <Input className="py-7" placeholder="Enter Purpose" name="purpose" onChange={handleChange} value={FormData.purpose} />
+        <Input className="py-7 border-rose-700" placeholder="Enter Purpose " name="purpose" onChange={handleChange} value={FormData.purpose} />
       </div>
 
       <DialogClose className='w-full'>

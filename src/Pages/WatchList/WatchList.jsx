@@ -23,7 +23,7 @@ const WatchList = () => {
 
   return (
     <div className="p-5 lg:px-20">
-      <h1 className="font-bold text-3xl pb-5 ">  Watchlist</h1>
+      <h1 className="font-bold text-3xl pb-5 text-rose-600">  Watchlist</h1>
        <Table className="border">
       <TableCaption>List of top cryptocurrencies.</TableCaption>
       <TableHeader>

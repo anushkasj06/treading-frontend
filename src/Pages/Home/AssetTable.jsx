@@ -10,8 +10,10 @@ import {
 } from "@/components/ui/table";
 
 import { Avatar,AvatarImage, AvatarFallback } from '@radix-ui/react-avatar'
+import { useNavigate } from "react-router-dom";
 
 const AssetTable = () => {
+  const navigate = useNavigate();
   return (
     <Table>
       <TableCaption>List of top cryptocurrencies.</TableCaption>
@@ -29,7 +31,7 @@ const AssetTable = () => {
       <TableBody>
         {[1,1,1,1,1,1,1,1,1,1,1].map((item, index) => (
           <TableRow key={index} className="hover:bg-gray-900">
-            <TableCell className="font-medium flex items-center gap-3">     
+          <TableCell onClick={()=>{navigate(`/market/bitcon`)}} className="font-medium flex items-center gap-3">     
               <Avatar>
                 <AvatarImage
                   src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400"

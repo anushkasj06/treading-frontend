@@ -14,7 +14,7 @@ import { Avatar,AvatarImage, AvatarFallback } from '@radix-ui/react-avatar'
 const Portfolio = () => {
   return (
     <div className="p-5 lg:px-20">
-      <h1 className="font-bold text-3xl pb-5 ">Portfolio</h1>
+      <h1 className="font-bold text-3xl pb-5 text-rose-600 ">Portfolio</h1>
        <Table>
       <TableCaption>List of top cryptocurrencies.</TableCaption>
       <TableHeader>

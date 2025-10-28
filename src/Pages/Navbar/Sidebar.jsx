@@ -5,27 +5,18 @@ import {
   BookmarkIcon,
   ActivityLogIcon,
   ExitIcon,
-    PersonIcon,
+  PersonIcon,
 } from '@radix-ui/react-icons'
-import { Navigate, useNavigate } from 'react-router-dom'
-
-
+import { useNavigate } from 'react-router-dom'
 import {
   WalletIcon,
   CreditCardIcon,
+  LandmarkIcon
 } from "lucide-react"
 import { Button } from '@/components/ui/button'
-
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
   SheetClose
 } from "@/components/ui/sheet"
-import { LandmarkIcon } from 'lucide-react'
 
 const menu = [
   {name: "Home", path: "/", icon: <HomeIcon className="w-5 h-5" />, isActive: true},
@@ -33,33 +24,30 @@ const menu = [
   {name: "Watchlist", path: "/watchlist", icon: <BookmarkIcon className="w-5 h-5" />, isActive: false},
   {name: "Activity", path: "/activity", icon: <ActivityLogIcon className="w-5 h-5" />, isActive: false},
   {name: "Wallet", path: "/wallet", icon: <WalletIcon className="w-5 h-5" />, isActive: false},
-  {name: "Payment Details", path: "/payment", icon: <LandmarkIcon className="w-5 h-5" />, isActive: false},
+  {name: "Payment Details", path: "payment-details", icon: <LandmarkIcon className="w-5 h-5" />, isActive: false},
   {name: "Withdrawal", path: "/withdrawal", icon: <CreditCardIcon className="w-5 h-5" />, isActive: false},
   {name: "Profile", path: "/profile", icon: <PersonIcon className="w-5 h-5" />, isActive: false},
   {name: "Logout", path: "/logout", icon: <ExitIcon className="w-5 h-5" />, isActive: false},
 ]
 
 const Sidebar = () => {
-
   const navigate = useNavigate();
+  
   return (
-
-      <div className="mt-10 space-y-5">
-        {menu.map((item, index) => (
-          <div key={index}>
-            <SheetClose className='w-full'>
-            <Button variant="outline" 
-            className='flex items-center gap-5 py-6 w-full onhover:bg-red-100'
-            onClick={() => navigate (item.path)}>
-              <span className='w-8'>
-                {item.icon}
-              </span>
-              <p>{item.name}</p>
-            </Button>
-            </SheetClose>
-          </div>
-        ))}
-      </div>
+    <div className="mt-10 space-y-5">
+      {menu.map((item, index) => (
+        <SheetClose asChild key={index}>
+          <Button
+            variant="outline"
+            className="flex items-center gap-5 py-6 w-full hover:bg-red-100"
+            onClick={() => navigate(item.path)}
+          >
+            <span className="w-8">{item.icon}</span>
+            <p>{item.name}</p>
+          </Button>
+        </SheetClose>
+      ))}
+    </div>
   )
 }
 
