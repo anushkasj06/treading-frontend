@@ -1,4 +1,4 @@
-import React, { use } from 'react'
+import React from 'react'
 import {
     Sheet,
     SheetContent,
@@ -10,21 +10,28 @@ import {
   } from "@/components/ui/sheet"
 import { DragHandleHorizontalIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import Sidebar from './Sidebar'
-import { Avatar,AvatarImage, AvatarFallback } from '@radix-ui/react-avatar'
+import { Avatar, AvatarFallback , AvatarImage } from '@radix-ui/react-avatar'
+import { useSelector } from 'react-redux'
+import { Bell } from 'lucide-react'
+import "./Navbar.css"
+
 
 
 const Navbar = () => {
 
+    const auth = useSelector((store) => store.auth)
+
 
   return (
-    <div className='px-2 py-3 border-b z-50 bg-background bg-opacity-0
-    sticky top-0 left-0 right-0 flex justify-between items-center'>
-       <div className='flex items-center gap-3'>
+    <div className='navShell'>
+      <div className='navContent'>
+       <div className='navBrand'>
        <Sheet>
             <SheetTrigger asChild>
-                <Button variant='ghost' size='icon' className='rounded-full h-11 w-11'>
-                    <DragHandleHorizontalIcon className='w-10 h-7' />
+                <Button variant='ghost' size='icon' className='rounded-full h-11 w-11 bg-white/5 hover:bg-white/10'>
+                    <DragHandleHorizontalIcon className='w-10 h-7 text-white' />
                 </Button>
             </SheetTrigger>
             <SheetContent className="w-72 border-r-0 flex-col justify-center " side='left'>
@@ -47,22 +54,48 @@ const Navbar = () => {
             </SheetContent>
         </Sheet>
 
-        <p className='text-sm lg:text-base cursor-pointer font-bold md:block '>
-            <span className='text-rose-500'>Crypto</span>
-             Treading
-        </p>
-        <div className='p-0 ml-9'>
-            <Button variant="outline" className='flex items-center gap-2  text-white hover:bg-gray-300 border-0'>
+        <div className='space-y-1'>
+            <p className='text-base lg:text-xl font-bold tracking-tight flex items-center gap-2'>
+              <span className='text-rose-400'>Crypto</span> Treading
+              <Badge className='bg-white/10 text-xs text-white border-white/20 rounded-full px-2.5 py-0.5'>Desk</Badge>
+            </p>
+            <div>
+              <div className='navPulse'>
+                <span className='navPulseDot' />
+                <span>Live session</span>
+              </div>
+              <div className='navMiniTicker'>
+                <span>BTC +2.3%</span>
+                <span>ETH 18 gwei</span>
+                <span>Desk latency 12 ms</span>
+              </div>
+            </div>
+        </div>
+        <div className='p-0 ml-6 flex items-center gap-3'>
+            <Button variant="outline" className='flex items-center gap-2 rounded-full text-white border-white/20 bg-white/5 hover:bg-white/10'>
                 <MagnifyingGlassIcon/>
-                <span>Search</span>
+                <span>Quick search</span>
+            </Button>
+            <Button variant="ghost" size="icon" className='rounded-full h-11 w-11 bg-white/5 hover:bg-white/10 text-white'>
+              <Bell className='h-5 w-5' />
             </Button>
         </div>
        </div>
-       <div>
-        <Avatar >
-            <AvatarFallback>CT</AvatarFallback>
+       <div className='navActions'>
+        <Button variant="ghost" className='rounded-full border border-white/10 bg-white/5 text-white/90 hover:bg-white/15 px-4'>
+          Status board
+        </Button>
+        <div className='navUserCard'>
+        <div className='text-right leading-tight'>
+            <p className='text-sm font-semibold text-white'>{auth.user?.fullName || "Analyst"}</p>
+            <p className='text-xs text-white/60'>Global desk</p>
+        </div>
+        <Avatar className='border border-white/20'>
+            <AvatarFallback>{auth.user?.fullName?.[0]?.toUpperCase() || "C"}</AvatarFallback>
         </Avatar>
        </div>
+       </div>
+      </div>
     </div> 
   )
 }

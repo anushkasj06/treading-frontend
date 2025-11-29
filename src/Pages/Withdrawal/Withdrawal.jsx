@@ -8,37 +8,77 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import "./Withdrawal.css"
 
 const Withdrawal = () => {
-  return (
-    <div className="p-5 lg:px-20">
-      <h1 className="font-bold text-3xl pb-5 ">WITHDRAWAL</h1>
-       <Table className="border">
-      <TableCaption>List of top cryptocurrencies.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="py-5">DATE</TableHead>
-          <TableHead>METHOD</TableHead>
-          <TableHead>AMOUNT</TableHead>
-          <TableHead className="text-right">STATUS</TableHead>
-        </TableRow>
-      </TableHeader>
+  const getStatus = (index) => {
+    const statuses = ['completed', 'pending', 'failed'];
+    return statuses[index % 3];
+  }
 
-      <TableBody>
-        {[1,1,1,1,1,1,1,1,1,1,1].map((item, index) => (
-          <TableRow key={index} className="hover:bg-gray-900">
-             <TableCell>
-              <p>June 2, 2024 at 11:43</p>
-             </TableCell>           
-            <TableCell>BANK</TableCell>
-            <TableCell>$490B</TableCell>
-            <TableCell className="text-right cursor-pointer">
-              $1500
-            </TableCell>
-          </TableRow>
+  const getStatusText = (status) => {
+    switch(status) {
+      case 'completed': return 'Completed';
+      case 'pending': return 'Pending';
+      case 'failed': return 'Failed';
+      default: return 'Pending';
+    }
+  }
+
+  return (
+    <div className="withdrawalScene">
+      <div className="withdrawalBackdrop" />
+      <div className="withdrawalGlow withdrawalGlow--one" />
+      <div className="withdrawalGlow withdrawalGlow--two" />
+      <div className="withdrawalGlow withdrawalGlow--three" />
+      <div className="withdrawalParticles">
+        {[...Array(7)].map((_, index) => (
+          <span key={index} className={`withdrawalParticle withdrawalParticle--${index + 1}`} />
         ))}
-      </TableBody>
-    </Table>
+      </div>
+
+      <div className="withdrawalContent">
+        <div className="withdrawalHeader">
+          <h1>Withdrawal History</h1>
+          <p>View all your withdrawal requests and their status</p>
+        </div>
+
+        <div className="withdrawalTableContainer">
+          <Table className="withdrawalTable">
+            <TableCaption className="withdrawalTableCaption">List of your withdrawal transactions</TableCaption>
+            <TableHeader className="withdrawalTableHeader">
+              <TableRow>
+                <TableHead className="withdrawalTableHead">DATE</TableHead>
+                <TableHead className="withdrawalTableHead">METHOD</TableHead>
+                <TableHead className="withdrawalTableHead">AMOUNT</TableHead>
+                <TableHead className="withdrawalTableHead text-right">STATUS</TableHead>
+              </TableRow>
+            </TableHeader>
+
+            <TableBody>
+              {[1,1,1,1,1,1,1,1,1,1,1].map((item, index) => {
+                const status = getStatus(index);
+                return (
+                  <TableRow key={index} className="withdrawalTableRow">
+                    <TableCell className="withdrawalTableCell">
+                      <p className="withdrawalDateCell">June 2, 2024 at 11:43</p>
+                    </TableCell>
+                    <TableCell className="withdrawalTableCell">
+                      <span className="withdrawalMethodCell">BANK</span>
+                    </TableCell>
+                    <TableCell className="withdrawalTableCell">$1,500</TableCell>
+                    <TableCell className="withdrawalTableCell text-right">
+                      <span className={`withdrawalStatus ${status}`}>
+                        {getStatusText(status)}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
     </div>
   )
 }

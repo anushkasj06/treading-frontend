@@ -1,0 +1,289 @@
+:root {
+  --withdrawal-surface: rgba(9, 11, 25, 0.85);
+  --withdrawal-outline: rgba(148, 163, 184, 0.25);
+  --withdrawal-card: rgba(15, 23, 42, 0.6);
+  --withdrawal-gradient: linear-gradient(120deg, #f59e0b 0%, #ef4444 45%, #ec4899 100%);
+  --withdrawal-orange-gradient: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  --withdrawal-shadow: 0 35px 90px rgba(5, 8, 21, 0.45);
+}
+
+.withdrawalScene {
+  position: relative;
+  min-height: calc(100vh - 60px);
+  padding: clamp(1.5rem, 3vw, 3rem);
+  background:
+    radial-gradient(circle at 5% 20%, rgba(245, 158, 11, 0.25), transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(239, 68, 68, 0.2), transparent 35%),
+    #020617;
+  overflow: hidden;
+  color: #f8fafc;
+}
+
+.withdrawalBackdrop,
+.withdrawalGlow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.withdrawalBackdrop {
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.55), transparent 60%);
+  mix-blend-mode: screen;
+}
+
+.withdrawalGlow {
+  border-radius: 9999px;
+  filter: blur(120px);
+  opacity: 0.55;
+  animation: float 18s ease-in-out infinite;
+}
+
+.withdrawalGlow--one {
+  width: 25rem;
+  height: 25rem;
+  background: rgba(245, 158, 11, 0.35);
+  top: -5%;
+  right: 15%;
+}
+
+.withdrawalGlow--two {
+  width: 32rem;
+  height: 32rem;
+  background: rgba(239, 68, 68, 0.35);
+  bottom: -10%;
+  left: -5%;
+  animation-delay: 4s;
+}
+
+.withdrawalGlow--three {
+  width: 20rem;
+  height: 20rem;
+  background: rgba(236, 72, 153, 0.35);
+  top: 25%;
+  left: 40%;
+  animation-delay: 8s;
+}
+
+.withdrawalContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.withdrawalParticles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.withdrawalParticle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.9);
+  animation: particleFloat 12s linear infinite;
+}
+
+.withdrawalParticle--1 { top: 10%; left: 20%; animation-delay: 0s; }
+.withdrawalParticle--2 { top: 40%; left: 5%; animation-delay: 2s; }
+.withdrawalParticle--3 { top: 65%; left: 70%; animation-delay: 4s; }
+.withdrawalParticle--4 { top: 25%; left: 80%; animation-delay: 6s; }
+.withdrawalParticle--5 { top: 80%; left: 30%; animation-delay: 8s; }
+.withdrawalParticle--6 { top: 55%; left: 55%; animation-delay: 10s; }
+.withdrawalParticle--7 { top: 15%; left: 55%; animation-delay: 12s; }
+
+.withdrawalHeader {
+  background: var(--withdrawal-surface);
+  border: 1px solid var(--withdrawal-outline);
+  border-radius: 32px;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  box-shadow: var(--withdrawal-shadow);
+  backdrop-filter: blur(24px);
+  opacity: 0;
+  animation: cardReveal 0.8s ease forwards;
+}
+
+.withdrawalHeader h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  background: var(--withdrawal-orange-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.withdrawalHeader p {
+  color: rgba(226, 232, 240, 0.7);
+  font-size: 0.95rem;
+}
+
+.withdrawalTableContainer {
+  background: var(--withdrawal-surface);
+  border: 1px solid var(--withdrawal-outline);
+  border-radius: 28px;
+  padding: clamp(1.25rem, 2vw, 1.75rem);
+  box-shadow: var(--withdrawal-shadow);
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  animation: cardReveal 0.8s ease forwards;
+  animation-delay: 0.15s;
+}
+
+.withdrawalTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.withdrawalTableHeader {
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 16px 16px 0 0;
+}
+
+.withdrawalTableRow {
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  animation: rowReveal 0.5s ease forwards;
+}
+
+.withdrawalTableRow:hover {
+  background: rgba(15, 23, 42, 0.6);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.1);
+}
+
+.withdrawalTableRow:nth-child(1) { animation-delay: 0.2s; }
+.withdrawalTableRow:nth-child(2) { animation-delay: 0.25s; }
+.withdrawalTableRow:nth-child(3) { animation-delay: 0.3s; }
+.withdrawalTableRow:nth-child(4) { animation-delay: 0.35s; }
+.withdrawalTableRow:nth-child(5) { animation-delay: 0.4s; }
+.withdrawalTableRow:nth-child(6) { animation-delay: 0.45s; }
+.withdrawalTableRow:nth-child(7) { animation-delay: 0.5s; }
+.withdrawalTableRow:nth-child(8) { animation-delay: 0.55s; }
+.withdrawalTableRow:nth-child(9) { animation-delay: 0.6s; }
+.withdrawalTableRow:nth-child(10) { animation-delay: 0.65s; }
+.withdrawalTableRow:nth-child(11) { animation-delay: 0.7s; }
+
+.withdrawalTableCell {
+  padding: 1rem 1.25rem;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.withdrawalTableHead {
+  padding: 1.25rem 1.25rem;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: rgba(226, 232, 240, 0.8);
+  background: rgba(15, 23, 42, 0.3);
+}
+
+.withdrawalTableCaption {
+  margin-top: 1rem;
+  color: rgba(226, 232, 240, 0.6);
+  font-size: 0.9rem;
+}
+
+.withdrawalStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.withdrawalStatus.completed {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.withdrawalStatus.pending {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.withdrawalStatus.failed {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.withdrawalDateCell {
+  color: rgba(226, 232, 240, 0.9);
+  font-weight: 500;
+}
+
+.withdrawalMethodCell {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 500;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-25px) scale(1.05);
+  }
+}
+
+@keyframes cardReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rowReveal {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-25px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 1024px) {
+  .withdrawalScene {
+    padding-bottom: 2rem;
+  }
+}
+

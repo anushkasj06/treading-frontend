@@ -24,29 +24,31 @@ const ForgotPasswortForm = () => {
   }
 
   return (
-    <div className='px-10 py-2'>
-      <h1 className='text-xl font-bold text-center pb-3'>Forgot Password</h1>
+    <div className='authForm'>
+      <h1 className='authFormHeading'>Reset access</h1>
+      <p className='authFormSubHeading'>Enter your account email to receive a secure recovery link.</p>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-5'>
 
           <FormField
             control={form.control}
             name='email'
             render={({ field }) => (
               <FormItem>
+                <FormLabel className='authFormLabel'>Email address</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    className='border w-full border-rose-700 p-5'
-                    placeholder='enter your email'
+                    className='authInput'
+                    placeholder='you@example.com'
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-            <Button  type='submit' className='w-full py-5'>
-            Submit
+            <Button  type='submit' className='authPrimaryButton'>
+            Send recovery email
           </Button>
         </form>
       </Form>

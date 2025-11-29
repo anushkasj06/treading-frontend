@@ -1,73 +1,141 @@
 import { Input } from '@/components/ui/input'
-import React from 'react'
+import React, { useState } from 'react'
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { DotFilledIcon } from '@radix-ui/react-icons'
 import { Button } from '@/components/ui/button'
+import { useDispatch } from 'react-redux'
+import { createPaymentLink } from '@/State/Wallet/Action'
+import { Loader2 } from 'lucide-react'
+import "./Wallet.css"
 
 
-const TopUpForm = () => {
-  const [amount, setAmount] = React.useState('')
-  const [paymentMethod, setPaymentMethod] = React.useState('RAZORPAY')
-
-
+const TopUpForm = ({ onSuccess }) => {
+  const dispatch = useDispatch();
+  const [amount, setAmount] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState('RAZORPAY')
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const jwt = localStorage.getItem("jwt");
 
   const handleAmountChange = (e) => {
-    setAmount(e.target.value)
+    const value = e.target.value;
+    // Only allow numbers
+    if (value === '' || /^\d+$/.test(value)) {
+      setAmount(value);
+      setError(null);
+    }
   }
 
   const handlePaymentMethodChange = (value) => {
     setPaymentMethod(value)
   }
 
-  const handleSubmit = (e) => {
-    console.log('Amount:', amount)
-    console.log('Payment Method:', paymentMethod)
-    // Add your submission logic here
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    // Validation
+    if (!amount || parseFloat(amount) <= 0) {
+      setError("Please enter a valid amount");
+      return;
+    }
+
+    if (parseFloat(amount) < 1) {
+      setError("Minimum amount is $1");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Backend expects amount in base currency (dollars/rupees), not cents/paise
+      // Backend will multiply by 100 internally for payment gateways
+      const amountValue = Math.round(parseFloat(amount));
+      
+      console.log("Submitting payment request:", {
+        paymentMethod,
+        amount: amountValue,
+        originalAmount: amount
+      });
+      
+      const result = await dispatch(createPaymentLink(paymentMethod, amountValue, jwt));
+      
+      console.log("Payment link result:", result);
+      
+      if (result?.payment_url) {
+        // Redirect to payment gateway
+        window.location.href = result.payment_url;
+      } else {
+        setError("Failed to create payment link. No payment URL received.");
+      }
+    } catch (error) {
+      console.error("Error creating payment link:", error);
+      const errorMessage = error.response?.data?.message || 
+                          error.response?.data?.error || 
+                          error.response?.data?.errorMessage ||
+                          error.message || 
+                          "Failed to create payment link. Please try again.";
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
-  
-
   return (
-    <>
-    <div className='pt-10 space-y-5'>
+    <div className='walletFormCard space-y-5'>
       <div>
-        <h1 className='pb-1'>Enter Amount</h1>
-        <Input onChange={handleAmountChange} 
-        value={amount}
-        className='py-7 text-lg'
-        placeholder='$9999'
+        <h1>Enter amount</h1>
+        <Input 
+          onChange={handleAmountChange} 
+          value={amount}
+          className='walletInput'
+          placeholder='$9999'
+          type="number"
+          min="1"
+          disabled={isLoading}
         />
       </div>
-      <div className='pb-1'>
-        <h1>select Payment Method</h1>
+      <div>
+        <h1>Choose payment method</h1>
         <RadioGroup 
-        className='flex flex-col space-y-3 pt-5' 
-        defaultValue="RAZORPAY"
-        onValueChange={(value) => handlePaymentMethodChange(value)}>
-          <div className='flex items-center space-x-2 border p-3 px-5 rounded-md'>
+          className='flex flex-col space-y-3 pt-3' 
+          defaultValue="RAZORPAY"
+          onValueChange={(value) => handlePaymentMethodChange(value)}
+          disabled={isLoading}
+        >
+          <div className='walletRadioCard'>
             <RadioGroupItem icon={DotFilledIcon} value="RAZORPAY" id="razorpay" />
-            <Label htmlFor="razorpay">Razorpay</Label>
-            <div className='bg-white rounded-md px-5 py-3 w-32'>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Razorpay_logo.svg/1200px-Razorpay_logo.svg.png?20171127075036" alt="" />
-
-            </div>
-
+            <Label htmlFor="razorpay" className='text-base font-medium'>Razorpay</Label>
+          </div>
+          <div className='walletRadioCard'>
             <RadioGroupItem icon={DotFilledIcon} value="STRIPE" id="stripe" />
-            <Label htmlFor="stripe">Stripe</Label>
-            <div className='bg-white rounded-md px-5  ml-2 py-3 w-30'>
-              <img className='h-5' src="https://e7.pngegg.com/pngimages/776/791/png-clipart-stripe-payment-gateway-e-commerce-payment-system-business-strips-blue-company.png" alt="" />
-
-            </div>
+            <Label htmlFor="stripe" className='text-base font-medium'>Stripe</Label>
           </div>
         </RadioGroup>
       </div>
 
-      <Button onClick={handleSubmit} className='w-full py-7  mt-5 bg-rose-500 hover:bg-rose-600 '>
-        Submit
+      {error && (
+        <div className='walletFormError'>
+          <p className='text-red-600 text-sm font-medium'>{error}</p>
+        </div>
+      )}
+
+      <Button 
+        onClick={handleSubmit} 
+        className='walletFormButton w-full'
+        disabled={isLoading || !amount}
+      >
+        {isLoading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Processing...
+          </>
+        ) : (
+          'Add funds'
+        )}
       </Button>
     </div>
-    </>
   )
 }
 

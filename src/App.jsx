@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./Pages/Navbar/Navbar";
 import Home from "./Pages/Home/Home";
 import { Route, Routes } from "react-router-dom";
@@ -14,12 +14,28 @@ import SearchCoin from "./Pages/Search/SearchCoin";
 import NotFound from "./Pages/NotFound/NotFound";
 import Auth from "./Pages/Auth/Auth";
 // import WithdrawalAdmin from "./Pages/Admin/WithdrawalAdmin";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getUser } from "./State/Auth/Action";
+
 
 export default function App() {
+
+  const auth = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+
+
+  console.log("auth---",auth);
+
+
+  useEffect(()=>{
+    dispatch(getUser(auth?.jwt || localStorage.getItem("jwt")))
+  },[auth?.jwt, dispatch])
+
+
   return (
     <>
-    <Auth/>
-      {false && <div>
+      {auth?.user ? <div>
           <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
@@ -35,7 +51,7 @@ export default function App() {
               <Route path="*" element={<NotFound />} />
               {/* <Route path="/admin/withdrawal" element={<WithdrawalAdmin />} /> */}
             </Routes>
-      </div>}
+      </div>: <Auth/>}
     </>
   );
 }

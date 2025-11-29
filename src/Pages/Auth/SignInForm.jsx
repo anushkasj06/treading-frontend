@@ -10,8 +10,13 @@ import {
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { useDispatch } from 'react-redux'
+import { login } from '@/State/Auth/Action'
+import { useNavigate } from 'react-router-dom'
 
 const SignInForm = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
   const form = useForm({
   defaultValues: {
     email: '',
@@ -21,25 +26,28 @@ const SignInForm = () => {
 
 
   const onSubmit = (data) => {
+    dispatch(login(data, navigate))
     console.log('Form data:', data)
   }
 
   return (
-    <div className='px-10 py-2'>
-      <h1 className='text-xl font-bold text-center pb-3'>Login</h1>
+    <div className='authForm'>
+      <h1 className='authFormHeading'>Log in to your hub</h1>
+      <p className='authFormSubHeading'>Secure authentication with adaptive protection.</p>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-5'>
 
           <FormField
             control={form.control}
             name='email'
             render={({ field }) => (
               <FormItem>
+                <FormLabel className='authFormLabel'>Email address</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    className='border w-full border-rose-700 p-5'
-                    placeholder='anushkasjXXXX@gmail.com'
+                    className='authInput'
+                    placeholder='you@example.com'
                   />
                 </FormControl>
                 <FormMessage />
@@ -52,19 +60,20 @@ const SignInForm = () => {
             name='password'
             render={({ field }) => (
               <FormItem>
+                <FormLabel className='authFormLabel'>Password</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    className='border w-full border-rose-700 p-5'
-                    placeholder='1243*******'
+                    className='authInput'
+                    placeholder='••••••••'
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-            <Button  type='submit' className='w-full py-5 bg-green-600 hover:bg-green-400'>
-            Submit
+            <Button  type='submit' className='authPrimaryButton'>
+            Continue
           </Button>
         </form>
       </Form>

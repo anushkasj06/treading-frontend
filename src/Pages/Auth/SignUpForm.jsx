@@ -10,9 +10,11 @@ import {
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { DialogClose } from '@/components/ui/dialog'
+import { useDispatch } from 'react-redux'
+import { register } from '@/State/Auth/Action'
 
 const SignUpForm = () => {
+  const dispatch = useDispatch()
   const form = useForm({
   defaultValues: {
     fullName: '',
@@ -23,24 +25,27 @@ const SignUpForm = () => {
 
 
   const onSubmit = (data) => {
+    dispatch(register(data))
     console.log('Form data:', data)
   }
 
   return (
-    <div className='px-10 py-2'>
-      <h1 className='text-xl font-bold text-center pb-3'>Create new Account</h1>
+    <div className='authForm'>
+      <h1 className='authFormHeading'>Create your workspace</h1>
+      <p className='authFormSubHeading'>Set up once and sync across every device.</p>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-5'>
 
           <FormField
             control={form.control}
             name='fullName'
             render={({ field }) => (
               <FormItem>
+                <FormLabel className='authFormLabel'>Full name</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    className='border w-full border-rose-700 p-5'
+                    className='authInput'
                     placeholder='Anushka Jadhav'
                   />
                 </FormControl>
@@ -54,11 +59,12 @@ const SignUpForm = () => {
             name='email'
             render={({ field }) => (
               <FormItem>
+                <FormLabel className='authFormLabel'>Email address</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    className='border w-full border-rose-700 p-5'
-                    placeholder='anushkasjXXXX@gmail.com'
+                    className='authInput'
+                    placeholder='you@example.com'
                   />
                 </FormControl>
                 <FormMessage />
@@ -71,19 +77,20 @@ const SignUpForm = () => {
             name='password'
             render={({ field }) => (
               <FormItem>
+                <FormLabel className='authFormLabel'>Password</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    className='border w-full border-rose-700 p-5'
-                    placeholder='1243*******'
+                    className='authInput'
+                    placeholder='••••••••'
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-            <Button type='submit' className='w-full py-5'>
-            Submit
+            <Button type='submit' className='authPrimaryButton'>
+            Create account
           </Button>
         </form>
       </Form>

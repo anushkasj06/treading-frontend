@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --stock-border: rgba(148, 163, 184, 0.25);
+  --stock-surface: rgba(9, 11, 25, 0.85);
+  --stock-card: rgba(15, 23, 42, 0.6);
+  --stock-gradient: linear-gradient(120deg, #0ea5e9 0%, #6366f1 45%, #ec4899 100%);
+  --stock-shadow: 0 35px 90px rgba(5, 8, 21, 0.45);
+}
+
+.stockScene {
+  position: relative;
+  min-height: calc(100vh - 60px);
+  padding: clamp(1.5rem, 3vw, 3rem);
+  background:
+    radial-gradient(circle at 5% 20%, rgba(59, 130, 246, 0.25), transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(236, 72, 153, 0.2), transparent 35%),
+    #020617;
+  overflow: hidden;
+  color: #f8fafc;
+  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.stockScene::before,
+.stockScene::after {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 999px;
+  filter: blur(130px);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stockScene::before {
+  top: -10%;
+  left: -15%;
+  background: rgba(14, 165, 233, 0.45);
+  animation: float 18s ease-in-out infinite;
+}
+
+.stockScene::after {
+  bottom: -20%;
+  right: -10%;
+  background: rgba(236, 72, 153, 0.4);
+  animation: float 18s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+.stockHero {
+  position: relative;
+  z-index: 1;
+  border-radius: 32px;
+  border: 1px solid var(--stock-border);
+  background: var(--stock-surface);
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  box-shadow: var(--stock-shadow);
+  backdrop-filter: blur(30px);
+  opacity: 0;
+  animation: cardReveal 0.8s ease forwards;
+}
+
+.stockTradeCard {
+  border-radius: 28px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(135deg, #ffffff, #eff6ff);
+  padding: 1.75rem;
+  box-shadow: 0 30px 70px rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+  animation: cardReveal 0.6s ease forwards;
+}
+
+.stockInput {
+  border-radius: 18px;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(248, 250, 252, 0.95);
+  color: #0f172a;
+  transition: all 0.3s ease;
+}
+
+.stockInput:focus {
+  border-color: rgba(14, 165, 233, 0.5);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.stockTradeButton {
+  border-radius: 999px;
+  padding: 0.95rem;
+  background: linear-gradient(135deg, #10b981, #14b8a6);
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.stockTradeButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-25px) scale(1.05);
+  }
+}
+
+.stockChartSection {
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: cardReveal 0.8s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.stockTradeBtn {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+}
+
+.stockFormError {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  margin-top: 0.5rem;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}
+
+@keyframes cardReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .stockScene {
+    padding: 1rem;
+  }
+  
+  .stockHero {
+    padding: 1.5rem;
+  }
+}
+

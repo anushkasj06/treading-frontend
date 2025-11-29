@@ -1,0 +1,175 @@
+:root {
+  --nav-glow-1: rgba(79, 70, 229, 0.6);
+  --nav-glow-2: rgba(14, 165, 233, 0.5);
+  --nav-border: rgba(148, 163, 184, 0.2);
+}
+
+.navShell {
+  position: sticky;
+  top: 0;
+  inset-inline: 0;
+  z-index: 60;
+  padding: 0.85rem clamp(1rem, 4vw, 2.75rem);
+  border-bottom: 1px solid var(--nav-border);
+  background: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+
+.navShell::before,
+.navShell::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  filter: blur(110px);
+  opacity: 0.65;
+  pointer-events: none;
+  animation: navFloat 16s ease-in-out infinite;
+}
+
+.navShell::before {
+  top: -40%;
+  left: -10%;
+  background: var(--nav-glow-1);
+}
+
+.navShell::after {
+  bottom: -45%;
+  right: -15%;
+  background: var(--nav-glow-2);
+  animation-delay: 4s;
+}
+
+.navContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navBrand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navPulse {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(226, 232, 240, 0.8);
+}
+
+.navPulseDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #34d399;
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.8);
+  animation: navPulse 1.4s ease infinite;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navUserCard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.25rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.navMiniTicker {
+  margin-top: 0.45rem;
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.78rem;
+  color: rgba(226, 232, 240, 0.75);
+}
+
+.navMiniTicker span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.sidebarPanel {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.sidebarStatus {
+  border-radius: 22px;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.55);
+  box-shadow: 0 20px 55px rgba(2, 6, 23, 0.4);
+  backdrop-filter: blur(18px);
+}
+
+.sidebarStatusStats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+}
+
+.sidebarStatusStats div {
+  padding: 0.6rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(15, 23, 42, 0.45);
+  font-size: 0.85rem;
+  color: rgba(226, 232, 240, 0.85);
+}
+
+.sidebarList button {
+  transition: transform 0.2s ease, border 0.2s ease, background 0.2s ease;
+}
+
+.sidebarList button:hover {
+  transform: translateX(4px);
+}
+
+.sidebarActiveBadge {
+  background: rgba(79, 70, 229, 0.15);
+  color: #c7d2fe;
+  border: 1px solid rgba(79, 70, 229, 0.4);
+}
+
+@keyframes navFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.05);
+  }
+}
+
+@keyframes navPulse {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+

@@ -1,0 +1,277 @@
+:root {
+  --watchlist-surface: rgba(9, 11, 25, 0.85);
+  --watchlist-outline: rgba(148, 163, 184, 0.25);
+  --watchlist-card: rgba(15, 23, 42, 0.6);
+  --watchlist-gradient: linear-gradient(120deg, #0ea5e9 0%, #6366f1 45%, #ec4899 100%);
+  --watchlist-rose-gradient: linear-gradient(135deg, #f43f5e 0%, #ec4899 100%);
+  --watchlist-shadow: 0 35px 90px rgba(5, 8, 21, 0.45);
+}
+
+.watchlistScene {
+  position: relative;
+  min-height: calc(100vh - 60px);
+  padding: clamp(1.5rem, 3vw, 3rem);
+  background:
+    radial-gradient(circle at 5% 20%, rgba(59, 130, 246, 0.25), transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(236, 72, 153, 0.2), transparent 35%),
+    #020617;
+  overflow: hidden;
+  color: #f8fafc;
+}
+
+.watchlistBackdrop,
+.watchlistGlow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.watchlistBackdrop {
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.55), transparent 60%);
+  mix-blend-mode: screen;
+}
+
+.watchlistGlow {
+  border-radius: 9999px;
+  filter: blur(120px);
+  opacity: 0.55;
+  animation: float 18s ease-in-out infinite;
+}
+
+.watchlistGlow--one {
+  width: 25rem;
+  height: 25rem;
+  background: rgba(244, 63, 94, 0.35);
+  top: -5%;
+  right: 15%;
+}
+
+.watchlistGlow--two {
+  width: 32rem;
+  height: 32rem;
+  background: rgba(236, 72, 153, 0.35);
+  bottom: -10%;
+  left: -5%;
+  animation-delay: 4s;
+}
+
+.watchlistGlow--three {
+  width: 20rem;
+  height: 20rem;
+  background: rgba(99, 102, 241, 0.35);
+  top: 25%;
+  left: 40%;
+  animation-delay: 8s;
+}
+
+.watchlistContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.watchlistParticles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.watchlistParticle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 18px rgba(244, 63, 94, 0.9);
+  animation: particleFloat 12s linear infinite;
+}
+
+.watchlistParticle--1 { top: 10%; left: 20%; animation-delay: 0s; }
+.watchlistParticle--2 { top: 40%; left: 5%; animation-delay: 2s; }
+.watchlistParticle--3 { top: 65%; left: 70%; animation-delay: 4s; }
+.watchlistParticle--4 { top: 25%; left: 80%; animation-delay: 6s; }
+.watchlistParticle--5 { top: 80%; left: 30%; animation-delay: 8s; }
+.watchlistParticle--6 { top: 55%; left: 55%; animation-delay: 10s; }
+.watchlistParticle--7 { top: 15%; left: 55%; animation-delay: 12s; }
+
+.watchlistHeader {
+  background: var(--watchlist-surface);
+  border: 1px solid var(--watchlist-outline);
+  border-radius: 32px;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  box-shadow: var(--watchlist-shadow);
+  backdrop-filter: blur(24px);
+  opacity: 0;
+  animation: cardReveal 0.8s ease forwards;
+}
+
+.watchlistHeader h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  background: var(--watchlist-rose-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.watchlistHeader p {
+  color: rgba(226, 232, 240, 0.7);
+  font-size: 0.95rem;
+}
+
+.watchlistTableContainer {
+  background: var(--watchlist-surface);
+  border: 1px solid var(--watchlist-outline);
+  border-radius: 28px;
+  padding: clamp(1.25rem, 2vw, 1.75rem);
+  box-shadow: var(--watchlist-shadow);
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  animation: cardReveal 0.8s ease forwards;
+  animation-delay: 0.15s;
+}
+
+.watchlistTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.watchlistTableHeader {
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 16px 16px 0 0;
+}
+
+.watchlistTableRow {
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  animation: rowReveal 0.5s ease forwards;
+}
+
+.watchlistTableRow:hover {
+  background: rgba(15, 23, 42, 0.6);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.1);
+}
+
+.watchlistTableRow:nth-child(1) { animation-delay: 0.2s; }
+.watchlistTableRow:nth-child(2) { animation-delay: 0.25s; }
+.watchlistTableRow:nth-child(3) { animation-delay: 0.3s; }
+.watchlistTableRow:nth-child(4) { animation-delay: 0.35s; }
+.watchlistTableRow:nth-child(5) { animation-delay: 0.4s; }
+.watchlistTableRow:nth-child(6) { animation-delay: 0.45s; }
+.watchlistTableRow:nth-child(7) { animation-delay: 0.5s; }
+.watchlistTableRow:nth-child(8) { animation-delay: 0.55s; }
+.watchlistTableRow:nth-child(9) { animation-delay: 0.6s; }
+.watchlistTableRow:nth-child(10) { animation-delay: 0.65s; }
+.watchlistTableRow:nth-child(11) { animation-delay: 0.7s; }
+
+.watchlistTableCell {
+  padding: 1rem 1.25rem;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.watchlistTableHead {
+  padding: 1.25rem 1.25rem;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: rgba(226, 232, 240, 0.8);
+  background: rgba(15, 23, 42, 0.3);
+}
+
+.watchlistTableHead.removeHead {
+  color: rgba(244, 63, 94, 0.9);
+}
+
+.watchlistTableCaption {
+  margin-top: 1rem;
+  color: rgba(226, 232, 240, 0.6);
+  font-size: 0.9rem;
+}
+
+.watchlistChange {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.watchlistCoinCell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.watchlistRemoveButton {
+  transition: all 0.2s ease;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  background: rgba(244, 63, 94, 0.1);
+}
+
+.watchlistRemoveButton:hover {
+  background: rgba(244, 63, 94, 0.2);
+  border-color: rgba(244, 63, 94, 0.5);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
+}
+
+.watchlistRemoveButton:active {
+  transform: scale(0.95);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-25px) scale(1.05);
+  }
+}
+
+@keyframes cardReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rowReveal {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-25px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 1024px) {
+  .watchlistScene {
+    padding-bottom: 2rem;
+  }
+}
+

@@ -1,10 +1,329 @@
-.authContainer{
-    background-image: url("https://png.pngtree.com/background/20250115/original/pngtree-crypto-trade-btc-bitcoin-illustration-for-graphics-marketing-promotion-picture-image_15584842.jpg");
-    height:100vh;
+:root {
+    --auth-bg: #030712;
+    --auth-surface: rgba(6, 12, 33, 0.75);
+    --auth-border: rgba(148, 163, 184, 0.2);
+    --auth-glow-one: rgba(99, 102, 241, 0.35);
+    --auth-glow-two: rgba(236, 72, 153, 0.35);
+    --auth-glow-three: rgba(59, 130, 246, 0.3);
+    --auth-card-shadow: 0 25px 80px rgba(15, 23, 42, 0.65);
+    --auth-primary: linear-gradient(135deg, #10b981 0%, #2563eb 55%, #9333ea 100%);
+    --auth-primary-hover: linear-gradient(135deg, #34d399 0%, #3b82f6 45%, #a855f7 100%);
+    --auth-outline: rgba(148, 163, 184, 0.25);
+}
+
+.authContainer {
+    position: relative;
+    min-height: 100vh;
     width: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position:center ;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.2), transparent 45%),
+        radial-gradient(circle at 80% 0%, rgba(236, 72, 153, 0.2), transparent 45%),
+        var(--auth-bg) url("https://images.unsplash.com/photo-1621504450181-5b61a86fd74d?auto=format&fit=crop&w=2400&q=80") center/cover no-repeat;
+    color: #f8fafc;
+    padding: clamp(2rem, 5vw, 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.authGradient {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(15, 23, 42, 0.35), transparent 60%);
+    z-index: 0;
+}
+
+.authNoise {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(125deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.03) 75%, transparent 75%, transparent);
+    background-size: 3px 3px;
+    opacity: 0.35;
+    mix-blend-mode: screen;
+    animation: grain 12s steps(10) infinite;
+    z-index: 0;
+}
+
+.authGlow {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(65px);
+    opacity: 0.8;
+    animation: float 16s ease-in-out infinite;
+    z-index: 0;
+}
+
+.authGlow--one {
+    width: 32rem;
+    height: 32rem;
+    background: var(--auth-glow-one);
+    top: 5%;
+    right: 12%;
+    animation-delay: 0s;
+}
+
+.authGlow--two {
+    width: 26rem;
+    height: 26rem;
+    background: var(--auth-glow-two);
+    bottom: 0%;
+    left: 5%;
+    animation-delay: 4s;
+}
+
+.authGlow--three {
+    width: 18rem;
+    height: 18rem;
+    background: var(--auth-glow-three);
+    top: 15%;
+    left: 35%;
+    animation-delay: 8s;
+}
+
+.authShell {
+    position: relative;
+    z-index: 1;
+    width: min(1200px, 100%);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+}
+
+.authHero {
+    padding: clamp(1rem, 4vw, 2rem);
+    max-width: 520px;
+}
+
+.authHero h1 {
+    font-size: clamp(2.5rem, 4vw, 3.75rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+}
+
+.authOverline {
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    font-size: 0.75rem;
+    color: rgba(226, 232, 240, 0.65);
+    margin-bottom: 1.5rem;
+}
+
+.authSubtitle {
+    color: rgba(226, 232, 240, 0.85);
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 2rem;
+}
+
+.authHighlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.authHighlights div {
+    padding: 1rem;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.35);
+    backdrop-filter: blur(18px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.authHighlightLabel {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.authHighlights span {
+    font-size: 0.85rem;
+    color: rgba(226, 232, 240, 0.7);
+}
+
+.authCard {
+    border: 1px solid var(--auth-border);
+    background: var(--auth-surface);
+    box-shadow: var(--auth-card-shadow);
+    backdrop-filter: blur(30px);
+    padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.authCardTitle {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.authCardDescription {
+    font-size: 0.95rem;
+    color: rgba(226, 232, 240, 0.75);
+    line-height: 1.6;
+}
+
+.authForm {
+    padding: 0.25rem;
+}
+
+.authFormHeading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+.authFormSubHeading {
+    color: rgba(226, 232, 240, 0.8);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.authFormLabel {
+    color: rgba(226, 232, 240, 0.85);
+    font-size: 0.9rem;
+}
+
+.authInput {
+    width: 100%;
+    padding: 0.95rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    background: rgba(15, 23, 42, 0.55);
+    color: #f8fafc;
+    transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.authInput::placeholder {
+    color: rgba(148, 163, 184, 0.85);
+}
+
+.authInput:focus {
+    border-color: rgba(14, 165, 233, 0.9);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
+    transform: translateY(-1px);
+}
+
+.authPrimaryButton {
+    width: 100%;
+    border-radius: 999px;
+    padding: 0.95rem 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background-image: var(--auth-primary);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: none;
+    color: #fff;
+    box-shadow: 0 15px 35px rgba(79, 70, 229, 0.35);
+}
+
+.authPrimaryButton:hover {
+    transform: translateY(-2px) scale(1.01);
+    background-image: var(--auth-primary-hover);
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.45);
+}
+
+.authGhostButton {
+    color: rgba(96, 165, 250, 0.95);
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.authGhostButton:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #dbeafe;
+}
+
+.authOutlineButton {
+    border-radius: 999px;
+    padding: 0.75rem 1.75rem;
+    border-color: rgba(59, 130, 246, 0.6);
+    color: #dbeafe;
+    transition: all 0.2s ease;
+}
+
+.authOutlineButton:hover {
+    border-color: rgba(96, 165, 250, 0.95);
+    color: #fff;
+    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.25);
+}
+
+.authSwitcher {
+    margin-top: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.92rem;
+    color: rgba(226, 232, 240, 0.85);
+}
+
+.authReset {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 18px;
+    border: 1px solid var(--auth-outline);
+    background: rgba(15, 23, 42, 0.45);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.authReset p {
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+}
+
+.authReset span {
+    font-size: 0.9rem;
+    color: rgba(226, 232, 240, 0.75);
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-25px) scale(1.05);
+    }
+}
+
+@keyframes grain {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(-5%, -5%);
+    }
+}
+
+@media (max-width: 900px) {
+    .authShell {
+        grid-template-columns: 1fr;
+    }
+
+    .authHero {
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .authHighlights {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    }
+
+    .authSwitcher {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .authReset {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 .bgBlure{
