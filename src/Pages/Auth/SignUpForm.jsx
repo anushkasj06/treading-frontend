@@ -12,9 +12,11 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useDispatch } from 'react-redux'
 import { register } from '@/State/Auth/Action'
+import { useNavigate } from 'react-router-dom'
 
 const SignUpForm = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const form = useForm({
   defaultValues: {
     fullName: '',
@@ -25,7 +27,7 @@ const SignUpForm = () => {
 
 
   const onSubmit = (data) => {
-    dispatch(register(data))
+    dispatch(register({ data, navigate }))
     console.log('Form data:', data)
   }
 
@@ -81,6 +83,7 @@ const SignUpForm = () => {
                 <FormControl>
                   <Input
                     {...field}
+                    type='password'
                     className='authInput'
                     placeholder='••••••••'
                   />

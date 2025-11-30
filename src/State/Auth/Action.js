@@ -22,8 +22,10 @@ export const register = ({ data, navigate }) => async (dispatch) => {
     // ✅ Correct navigation call
     navigate("/");
   } catch (error) {
-    console.error(error);
-    dispatch({ type: REGISTER_FAILURE, payload: error.message });
+    console.error("Registration error:", error);
+    const errorMessage = error.response?.data?.message || error.message || "Registration failed";
+    console.error("Error details:", error.response?.data);
+    dispatch({ type: REGISTER_FAILURE, payload: errorMessage });
   }
 };
 
@@ -41,8 +43,10 @@ export const login = (userData, navigate) => async (dispatch) => {
     // ✅ Correct navigation after successful login
     navigate("/");
   } catch (error) {
-    console.error(error);
-    dispatch({ type: LOGIN_FAILURE, payload: error.message });
+    console.error("Login error:", error);
+    const errorMessage = error.response?.data?.message || error.message || "Login failed";
+    console.error("Error details:", error.response?.data);
+    dispatch({ type: LOGIN_FAILURE, payload: errorMessage });
   }
 };
 

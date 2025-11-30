@@ -64,6 +64,7 @@ const SignInForm = () => {
                 <FormControl>
                   <Input
                     {...field}
+                    type='password'
                     className='authInput'
                     placeholder='••••••••'
                   />
